@@ -28,6 +28,7 @@
   "dependencies": {
     "broccoli-filter": "^0.1.6",
     "less": "^2.0.0",
+    "minimatch": "^2.0.4",
     "rsvp": "^3.0.4"
   },
   "devDependencies": {
