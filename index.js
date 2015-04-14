@@ -5,6 +5,7 @@ var less = require('less');
 var Minimatch = require('minimatch').Minimatch;
 var fs = require('fs');
 var path = require('path');
+var clone = require('lodash/lang/clone');
 
 function LessFilter(inputTree, options) {
 	if (!(this instanceof LessFilter)) {
@@ -64,11 +65,16 @@ LessFilter.prototype.processFile = function (srcDir, destDir, relativePath) {
 LessFilter.prototype.processString = function (str, srcDir, relativePath) {
 
     this.options.filename = this.options.filename || relativePath;
-    this.options.paths = this.options.paths.map(function(relative) {
+
+    var options = clone(this.options);
+
+    var paths = this.options.paths.map(function(relative) {
         return path.join(srcDir, relative);
     });
 
-    return less.render(str, this.options).then(function(output) {
+    options.paths = paths;
+
+    return less.render(str, options).then(function(output) {
         return output.css;
     }).catch(function(error) {
         console.error("Error processing file ", error.filename, "at line ", error.line);
