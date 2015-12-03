@@ -12,6 +12,8 @@ function LessFilter(inputTree, options) {
 		return new LessFilter(inputTree, options);
 	}
 
+	Filter.call(this, inputTree);
+
 	this.inputTree = inputTree;
   this.includeFiles = options.include || [];
   delete options.include;
